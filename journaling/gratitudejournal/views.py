@@ -10,6 +10,7 @@ import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
+from journaling.settings import MEDIA_ROOT
 
 
 # Create your views here.
@@ -32,10 +33,12 @@ class CreateJournal(View):
         data = request.FILES['images']
         ic(data.name)
         ic(data.size)
+        ic(MEDIA_ROOT)
         img_url =[]
         for x in data1:
             img_url.append((f'{path}/{x}'))
-        print(img_url)
+        ic(img_url[0])
+        
         cxt = {'form':form , 'img':img_url}
         if form.is_valid():
             form.save()

@@ -43,9 +43,11 @@
           <a href="{% url 'gratitudejournal:create' %}">Create New Entry for Gratitude</a>
           <hr>
       </div>
-      {% for x in img %}
-          {{ x }}
-      {% endfor %}
+      
+          {% for x in img %}
+              <img src="{{ x }}">
+              <br>
+          {% endfor %}
             <div class="col">    
           {% comment %} <a href="{% url 'gratitudejournal:create-lifelog' %}">Create New Entry for LifeLog</a> {% endcomment %}
           <hr>
