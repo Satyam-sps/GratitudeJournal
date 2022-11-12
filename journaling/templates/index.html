@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+{% block index %}
+    <div class="container">
+      <div class="row">
+      <div class="col">
+      {% for data in data %}
+      <div class="card">
+            <div class="card-body">
+                <h4 class="card-title"> {{data.date_created}}</h4>
+                <p class="card-text"> Journal Entry :- {{  data.journal_entry }}</p>
+                <p class="card-text"> Positive Experience  :- {{  data.positive_experience }}</p>
+                <p class="card-text"> Rate Your Day :- {{  data.rate_your_day }}</p>
+                <a href="{% url 'gratitudejournal:detail' data.id %}" class="btn btn-primary stretched-link">Detail</a>
+                <a href="{%  url 'gratitudejournal:update' data.id %}" class="btn btn-primary stretched-link">Update</a>
+                <a href="#" class="btn btn-primary stretched-link" data-toggle="modal" data-target="#exampleModal">Delete</a>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Are You Sure you want to delete Journal Entry ?</h5>
+        <button type="button" class="close" data-dismiss="modal" href="#" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
+        <a href="{%  url 'gratitudejournal:delete' data.id %}" type="button" class="btn btn-primary">Yes</a>
+      </div>
+    </div>
+  </div>
+</div>
+            </div>
+        </div>
+
+      {% endfor %}
+      </div>
+
+      <div class="col">    
+          <a href="{% url 'gratitudejournal:create' %}">Create New Entry for Gratitude</a>
+          <hr>
+      </div>
+      {% for x in img %}
+          {{ x }}
+      {% endfor %}
+            <div class="col">    
+          {% comment %} <a href="{% url 'gratitudejournal:create-lifelog' %}">Create New Entry for LifeLog</a> {% endcomment %}
+          <hr>
+      </div>
+      </div>
+{% endblock index %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block detail %}
+    <div class="container">
+    <h3>Today's Journal Entry :</h3>
+    <h4>{{ detail.journal_entry }}<h4>
+    <h3>Write for couple of line a positive experience you had in past 24 Hours </h3>
+    <h4>{{ detail.positive_experience }}<h4>
+    <h3>Updated at </h3>
+    <h4>{{ detail.updated_at }}</h4>
+   <h3>Rate your Day ? </h3>
+   {% if detail.rate_your_day == 5 %}
+        <h5>Very Good</h5>
+   {% endif %}
+
+    {% if detail.rate_your_day == 4 %}
+        <h5>Good</h5>
+   {% endif %}
+
+    {% if detail.rate_your_day == 3 %}
+        <h5>Average</h5>
+   {% endif %}
+
+    {% if detail.rate_your_day == 2 %}
+        <h5>Bad</h5>
+   {% endif %}
+
+    {% if detail.rate_your_day == 1 %}
+        <h5>Very Bad</h5>
+   {% endif %}
+    </div>
+
+    <div class="container">
+        {% for x in img %}
+        <figure class="figure">
+        <img src="{{ MEDIA_URL }}{{ x.grat_attach_img }}" class="figure-img img-fluid rounded" alt="...">
+        </figure>
+        {% endfor %}
+    </div>
+{% endblock detail %}

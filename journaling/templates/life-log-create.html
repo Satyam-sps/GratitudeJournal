@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block lifelog %}
+<form action="" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+<label for="life_log_entry">Life Log Entry</label>
+
+    <input type="text" name="life_log_entry" id="journal_entry" >
+    <br>
+    <br>
+     <input type="file" name="images" multiple>
+     <br>
+     <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock lifelog %}

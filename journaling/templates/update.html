@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block update %}
+<form action="" method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    {% for x in img %}
+        <figure class="figure">
+        <img src="{{ MEDIA_URL }}{{ x.grat_attach_img }}" class="figure-img img-fluid rounded" alt="...">
+        </figure>
+        {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock update %}
