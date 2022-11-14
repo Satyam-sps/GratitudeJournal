@@ -12,16 +12,25 @@ class GratitudeJournal(models.Model):
         (1,'Very Bad'),
     )
 
+    journal_type = (
+        ('gratitude_journal','Gratitude Journal'),
+        ('lifelog_journal','LifeLog Journal'),
+    )
+    journal_type    = models.CharField(choices=journal_type,max_length=20,help_text="Select the Type of Journal",null=True,blank=True)
     journal_entry  =  models.TextField(help_text="Enter your Today's Journal Entry" )
     positive_experience = models.TextField(help_text="Share 1 positve experience which you experienced in past 24 Hours",blank=True)
+    user_name           = models.CharField(max_length=50,null=True,blank=True)
+    user_id              = models.IntegerField(blank=True , null=True)
     rate_your_day  =  models.PositiveSmallIntegerField("How is your Day", choices=review_your_day, default=5)
     date_created  = models.DateField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now= True)
     images = models.CharField("Please Choose your images", max_length=200,blank=True,null=True)
-
     
     def __str__(self):
         return f'{self.journal_entry}'
+
+    def get_journal_type(self):
+        pass
 
 
 # class LifeLogJournal(models.Model):

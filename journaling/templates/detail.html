@@ -28,12 +28,31 @@
         <h5>Very Bad</h5>
    {% endif %}
     </div>
+        
+<div class="container">
+<figure class="figure">
 
-    <div class="container">
-        {% for x in img %}
-        <figure class="figure">
-        <img src="{{ MEDIA_URL }}{{ x.grat_attach_img }}" class="figure-img img-fluid rounded" alt="...">
-        </figure>
-        {% endfor %}
+    {% for x in img_name %}
+    <div>
+        
     </div>
+    <br>
+{% endfor %}
+</figure>
+
+ <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    
+        {% for x in img_name %}
+            <div class="col">
+            <div class="card shadow-sm my-3 px-3 py-3">
+            <img src="{{  detail.images }}/{{  x }}">
+            </div>
+            </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
 {% endblock detail %}

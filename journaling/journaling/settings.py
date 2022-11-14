@@ -16,6 +16,8 @@ from icecream import ic
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+file_name = 'test.txt'
+ENV_PATH = os.path.dirname(os.path.abspath(file_name))
 
 TEST_DIR = "/home/satyam/Desktop/Desktop"
 
@@ -128,6 +130,6 @@ STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR , 'media')
 
-
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ic(ENV_PATH)

@@ -6,6 +6,7 @@ from django import forms
 class GratitudeForm(ModelForm):
     journal_entry = forms.Textarea(attrs={'rows':4,'cols':15})
     images        = forms.ImageField()
+    user          = forms.CharField()
     images.widget.attrs.update({'multiple':'multiple'})
     class Meta:
         model = GratitudeJournal

@@ -10,50 +10,85 @@ import os
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.conf import settings
-from journaling.settings import MEDIA_ROOT
+from journaling.settings import MEDIA_ROOT ,MEDIA_URL
+from django.core.files.storage import FileSystemStorage
+from .function import img_format , writefile_to_dir
+
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+
 
 
 # Create your views here.
 
 path = '/home/satyam/Desktop/Desktop'
 
+def img_name_formatter(img):
+    pass
 
 
 class CreateJournal(View):
     def get(self,request):
         form = GratitudeForm()
-        # attach_form = gratitudeAttach()
-        # cxt = {'create_form':form, 'attach_form':attach_form}
         cxr = {'create_form':form}
         return render(request,'create.html',cxr)
 
     def post(self,request):
         form = GratitudeForm(request.POST or None , request.FILES or None)
-        data1 = request.FILES.getlist('images')
-        data = request.FILES['images']
-        ic(data.name)
-        ic(data.size)
-        ic(MEDIA_ROOT)
-        img_url =[]
-        for x in data1:
-            img_url.append((f'{path}/{x}'))
-        ic(img_url[0])
+        journal_entry =request.POST.get('journal_entry')
+        positive_experience = request.POST.get('positive_experience')
+        rate_your_day = request.POST.get('rate_your_day')
+        images = request.FILES.getlist('image')
+        journal_type = request.POST.get('journal_type')
+        ic(journal_type)
+        username = request.POST.get('username')
+        user_id = request.POST.get('user_id')
+
+        #This return formatted Image name
+        format_img = img_format(images, journal_type,user_id,username)
+        ic(format_img)
+
         
-        cxt = {'form':form , 'img':img_url}
-        if form.is_valid():
-            form.save()
-            return render(request , 'index.html' , cxt)
+        # This code created directory of the on the basis of username if it does not exists
+
+        if journal_type == 'gratitude_journal':
+            img_dir = os.path.join(MEDIA_ROOT,'gratitude_journal')
+            new_usr_path = os.path.join(img_dir,username)
+            if not os.path.exists(new_usr_path):
+                os.makedirs(new_usr_path)
         else:
-            return form.errors.as_json
-        # journal_entry =request.POST.get('journal_entry')
-        # positive_experience = request.POST.get('positive_experience')
-        # rate_your_day = request.POST.get('rate_your_day')
-        # images = request.FILES.getlist('image')
-        # journal_instance = GratitudeJournal.objects.create(journal_entry=journal_entry,positive_experience=positive_experience,rate_your_day=rate_your_day)
-        # print(request.POST)
-        # for img in images:
-        #     Attachment.objects.create(grat_attach_img=img,gratitude_attach_key=journal_instance)
+            img_dir = os.path.join(MEDIA_ROOT,'lifelog_journal')
+            new_usr_path = os.path.join(img_dir,username)
+            if not os.path.exists(new_usr_path):
+                os.makedirs(new_usr_path)   
+            ic(new_usr_path)
+
         
+        ic(MEDIA_ROOT)
+        ic(format_img)
+        upload_path = f'{MEDIA_ROOT}/{journal_type}/{username}'
+        ic(upload_path)
+
+        data = writefile_to_dir(upload_path,images,format_img)
+        ic(data)
+
+
+        # This is stores images in username specific directory
+        # for x in format_img:
+        #     ic(x)
+        #     fs = FileSystemStorage(location=new_usr_path).save(x.name,x)
+        #     ic(fs)
+        
+        if journal_type == 'GJ':
+            img_dir = os.path.join(MEDIA_URL,'gratitude_journal')
+        else:
+            img_dir = os.path.join(MEDIA_URL , 'lifelog_journal')
+
+        new_img_path = os.path.join(img_dir,username)
+        ic(new_img_path)
+
+        GratitudeJournal.objects.create(journal_entry=journal_entry,positive_experience=positive_experience, user_id = user_id,rate_your_day=rate_your_day,images=new_img_path,journal_type=journal_type,user_name=username)
+        print(request.POST)
         return redirect('gratitudejournal:index')
      
 class Index(View):
@@ -95,9 +130,21 @@ class UpdateJournal(View):
 class DetailJournal(View):
     def get(self , request , pk):
         detail_data = GratitudeJournal.objects.get(id = pk)
+        ic(detail_data)
         # images = Attachment.objects.filter(gratitude_attach_key=pk).values()
         # cxt = {'detail':detail_data, 'img':images}
-        cxt = {'detail':detail_data}
+        img_detail = GratitudeJournal.objects.get(id = pk)
+        username = 'satyam'
+        journal = 'gratitude_journal'
+
+        ic(MEDIA_ROOT)
+        img_path = os.path.join(MEDIA_ROOT,'gratitude_journal/satyam')
+        ic(img_path)
+        list_img = []
+        for file in os.listdir(img_path):
+            list_img.append(file)
+        cxt = {'detail':detail_data,'username':username , 'journal':journal,'img_name':list_img}
+        
         return render(request , 'detail.html', cxt)
 
         

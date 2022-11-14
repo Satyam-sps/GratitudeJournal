@@ -9,6 +9,7 @@
       <div class="card">
             <div class="card-body">
                 <h4 class="card-title"> {{data.date_created}}</h4>
+                <p class="card-text"> Username :- {{ data.user_name }} </p>
                 <p class="card-text"> Journal Entry :- {{  data.journal_entry }}</p>
                 <p class="card-text"> Positive Experience  :- {{  data.positive_experience }}</p>
                 <p class="card-text"> Rate Your Day :- {{  data.rate_your_day }}</p>
@@ -47,6 +48,11 @@
           {% for x in img %}
               <img src="{{ x }}">
               <br>
+          {% endfor %}
+
+          {% for x in img %}
+          {{ x }}
+          <br>
           {% endfor %}
             <div class="col">    
           {% comment %} <a href="{% url 'gratitudejournal:create-lifelog' %}">Create New Entry for LifeLog</a> {% endcomment %}

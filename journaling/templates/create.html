@@ -1,42 +1,65 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 
-{% block create_form %}
-
+{% comment %} {% block create_form %}
 <form method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{ create_form|crispy }}
 <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-{% endblock create_form %}
-{% comment %} <form method="post" enctype="multipart/form-data">
-{% csrf_token %}
-  <div class="form-group">
-    <label for="inputForEntry" class="form-label">Journal Entry</label>
-    <textarea class="form-control" name="journal_entry" id="journal_entry" cols="30" rows="7" aria-describedby="journalEntry" placeholder="What are you grateful for ?"></textarea>
-    <small id="journalEntry" class="form-text text-muted">Mentions things for which you are grateful .</small>
-  </div>
-  <div class="form-group">
-    <label for="inputForPositiveExperience">Share a Positive Experience you had </label>
-    <textarea class="form-control" name="positive_experience" id="positive_experience" cols="30" rows="7" aria-describedby="positiveExperience" placeholder="A Positive experience to note"></textarea>
-  </div>
-    <div class="mb-3">
-  <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-  <input class="form-control" type="file" id="formFileMultiple" name="image" multiple>
-</div>
-<div class="form-floating">
-<label for="floatingSelect">How's Your Day ?</label>
-  <select class="form-select" name="rate_your_day" , id="rate_your_day">
-    <option value="5">Very Good</option>
-    <option value="4">Good</option>
-    <option value="3">Normal</option>
-    <option value="2">Bad</option>
-    <option value="1">Very Bad</option>
-  </select>
-  
-</div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form> {% endcomment %}
+{% endblock create_form %} {% endcomment %}
 
+
+{% block create_form %}
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+      <div class="mt-5">
+    <div class="form-group">
+  
+        <label for="floatingSelect">Type of Journal</label>
+    <select class="form-select" name="journal_type" , id="journal_type">
+      <option value="gratitude_journal">Gratitude Journal</option>
+      <option value="lifelog_journal">LifeLog Journal</option>
+    </select>
+      </div>
+      <div>
+      <label for="inputForEntry" class="form-label">Journal Entry</label>
+      <textarea class="form-control" name="journal_entry" id="journal_entry" cols="30" rows="7" aria-describedby="journalEntry" placeholder="What are you grateful for ?"></textarea>
+      <small id="journalEntry" class="form-text text-muted">Mentions things for which you are grateful .</small>
+    </div>
+
+    <div class="form-group">
+      <label for="userid">user Id </label>
+      <textarea class="form-control" name="user_id" id="user_id" placeholder="User Id"></textarea>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputForPositiveExperience">Share a Positive Experience you had </label>
+      <textarea class="form-control" name="positive_experience" id="positive_experience" cols="30" rows="7" aria-describedby="positiveExperience" placeholder="A Positive experience to note"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="inputForPositiveExperience">Enter Username</label>
+      <textarea class="form-control" name="username" id="username" aria-describedby="username" placeholder="Enter Username"></textarea>
+    </div>
+      <div class="mb-3">
+    <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+    <input class="form-control" type="file" id="formFileMultiple" name="image" multiple>
+  </div>
+  <div class="form-floating">
+  <label for="floatingSelect">How's Your Day ?</label>
+    <select class="form-select" name="rate_your_day" , id="rate_your_day">
+      <option value="5">Very Good</option>
+      <option value="4">Good</option>
+      <option value="3">Normal</option>
+      <option value="2">Bad</option>
+      <option value="1">Very Bad</option>
+    </select>
+    
+  </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+  
+  
+{% endblock create_form %}
 
 
