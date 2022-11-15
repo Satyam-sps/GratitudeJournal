@@ -79,7 +79,11 @@ class CreateJournal(View):
         #     fs = FileSystemStorage(location=new_usr_path).save(x.name,x)
         #     ic(fs)
         
-        if journal_type == 'GJ':
+
+        """
+        Below code on basis of type of journal creates path from mediaurl to journal_type 
+        """
+        if journal_type == 'gratitude_journal':
             img_dir = os.path.join(MEDIA_URL,'gratitude_journal')
         else:
             img_dir = os.path.join(MEDIA_URL , 'lifelog_journal')
@@ -131,19 +135,20 @@ class DetailJournal(View):
     def get(self , request , pk):
         detail_data = GratitudeJournal.objects.get(id = pk)
         ic(detail_data)
+        ic(request)
         # images = Attachment.objects.filter(gratitude_attach_key=pk).values()
         # cxt = {'detail':detail_data, 'img':images}
         img_detail = GratitudeJournal.objects.get(id = pk)
-        username = 'satyam'
-        journal = 'gratitude_journal'
+        user_name = img_detail.user_name
+        journal_type = img_detail.journal_type
 
         ic(MEDIA_ROOT)
-        img_path = os.path.join(MEDIA_ROOT,'gratitude_journal/satyam')
+        img_path = os.path.join(MEDIA_ROOT,f'{journal_type}/{user_name}')
         ic(img_path)
         list_img = []
         for file in os.listdir(img_path):
             list_img.append(file)
-        cxt = {'detail':detail_data,'username':username , 'journal':journal,'img_name':list_img}
+        cxt = {'detail':detail_data,'img_name':list_img,'img_folder':img_detail}
         
         return render(request , 'detail.html', cxt)
 

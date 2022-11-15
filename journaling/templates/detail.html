@@ -44,11 +44,14 @@
     <div class="container">
 
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    
+
         {% for x in img_name %}
+        {{ detail }}
+        {{ img_folder }}
+        {{ x }}
             <div class="col">
             <div class="card shadow-sm my-3 px-3 py-3">
-            <img src="{{  detail.images }}/{{  x }}">
+            <img src="{{  img_folder.images }}/{{  x }}">
             </div>
             </div>
         {% endfor %}
